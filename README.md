@@ -1,5 +1,5 @@
 # Yet Another Docker Image for Golang Development Environment
-A docker image for developing program (application) in (Golang)[https://golang.org/].
+A docker image for developing program (application) in [Golang](https://golang.org/).
 This image enables developers to develop program in Go without installing the language.
 To make things easier, this image also by default able to watch Go source files and
 build them when changes are detected. Additionally, vim with (vim-go)[https://github.com/fatih/vim-go]
@@ -9,14 +9,14 @@ is also available for you who uses vim as the main code editor.
 - Latest Golang release based on `golang:alpine` image
 - Git
 - Vim with plugins:
-	- (vim-go)[https://github.com/fatih/vim-go]
-	- (neocomplete)[https://github.com/Shougo/neocomplete.vim]
-	- (nerdcommenter)[https://github.com/scroolose/nerdcommenter]
-	- (vim-fugitive)[https://github.com/tpope/vim-fugitive]
-	- (vim-gitgutter)[https://github.com/vim-gitgutter]
-	- (vim-airline)[https://github.com/vim-airline]
-- (govendor)[https://github.com/kardianos/govendor]
-- (reflex), a small tool to watch a directory and rerun a command when
+	- [vim-go](https://github.com/fatih/vim-go)
+	- [neocomplete](https://github.com/Shougo/neocomplete.vim)
+	- [nerdcommenter](https://github.com/scroolose/nerdcommenter)
+	- [vim-fugitive](https://github.com/tpope/vim-fugitive)
+	- [vim-gitgutter](https://github.com/vim-gitgutter)
+	- [vim-airline](https://github.com/vim-airline)
+- [govendor](https://github.com/kardianos/govendor)
+- [reflex](https://github.com/cespare/reflex), a small tool to watch a directory and rerun a command when
   certain files change.
 
 ## Using the image
