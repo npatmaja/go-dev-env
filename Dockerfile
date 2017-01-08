@@ -20,13 +20,12 @@ RUN echo "reflex -c /_tools/reflex.conf; sh" >> /_tools/up.sh
 RUN echo "-sg '*.go' /_tools/build.sh" >> /_tools/reflex.conf
 
 RUN echo "#!/bin/sh" >> /_tools/build.sh
-RUN echo "cd $SRCPATH && go fmt && go test && go build -o /appbin && rm -rf /tmp/*" >> /_tools/build.sh
+RUN echo "cd $SRCPATH && go build -o /appbin && rm -rf /tmp/*" >> /_tools/build.sh
 RUN echo "/appbin" >> /_tools/build.sh
 
-# Install Git
+# Install tools
 RUN apk add --no-cache \
 	git \
-# Install Vim
 	vim \
 	curl
 
