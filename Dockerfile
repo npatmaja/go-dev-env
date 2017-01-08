@@ -49,7 +49,7 @@ RUN cd /root && \
 	git clone --depth 1 https://github.com/airblade/vim-gitgutter.git && \
 	git clone --depth 1 https://github.com/fatih/vim-go.git && \
 	git clone --depth 1 https://github.com/vim-airline/vim-airline.git && \
-	vim +PlugInstall +qall && \
+	vim +PlugInstall +GoInstallBinaries +qall && \
 	# Cleanup
 	rm -rf nerdcommenter/.git neocomplete/.git vim-fugitive/.git \
 	vim-gitgutter/.git vim-go/.git vim-airline/.git
