@@ -2,7 +2,7 @@
 A docker image for developing program (application) in [Golang](https://golang.org/).
 This image enables developers to develop program in Go without installing the language.
 To make things easier, this image also by default able to watch Go source files and
-build them when changes are detected. Additionally, vim with (vim-go)[https://github.com/fatih/vim-go]
+build them when changes are detected. Additionally, vim with [vim-go](https://github.com/fatih/vim-go)
 is also available for you who uses vim as the main code editor.
 
 ## What's included?
@@ -28,16 +28,16 @@ you should overide the default comand.
 
 ### Watch and build Go files upon changes
 ```
-$ docker run -v ${PWD}:/go/src/app -p "8080:8080" npatmaja/go-dev-env
+$ docker run -v ${PWD}:/go/src/app -p "8080:8080" npatmaja/godev
 ```
 
 ### Edit files using Vim
 ```
-$ docker run -v ${PWD}:/go/src/app -p "8080:8080" npatmaja/go-dev-env vim
+$ docker run -it -v ${PWD}:/go/src/app -p "8080:8080" npatmaja/godev vim
 ```
 If you want to disable hardware control flow when using vim, i.e., enable
 CTRL-S and CTRL-Q, then you should do the following:
 ```
-$ docker run -v ${PWD}:/go/src/app -p "8080:8080" npatmaja/go-dev-env vim
-#the-image-id:go/src/app# vim
+$ docker run it -v ${PWD}:/go/src/app -p "8080:8080" npatmaja/godev sh -l
+the-image-id:go/src/app# vim
 ```
