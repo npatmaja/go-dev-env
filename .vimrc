@@ -19,6 +19,8 @@ Plug 'Shougo/neocomplete.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
+Plug 'tpope/vim-surround'
+
 Plug 'fatih/vim-go'
 
 " Status bar
