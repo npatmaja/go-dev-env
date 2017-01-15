@@ -45,8 +45,10 @@ RUN mkdir /_tools && \
 	mkdir -p .vim/plugged && \
 	cd .vim/plugged && \
 	git clone --depth 1 https://github.com/scrooloose/nerdcommenter.git && \
-	git clone --depth 1 https://github.com/Shougo/neocomplete.git && \
+	git clone --depth 1 https://github.com/Shougo/neocomplete.vim.git && \
 	git clone --depth 1 https://github.com/tpope/vim-fugitive.git && \
+	git clone --depth 1 https://github.com/tpope/vim-surround.git && \
+	git clone --depth 1 https://github.com/cohama/lexima.vim.git && \
 	git clone --depth 1 https://github.com/airblade/vim-gitgutter.git && \
 	git clone --depth 1 https://github.com/fatih/vim-go.git && \
 	git clone --depth 1 https://github.com/vim-airline/vim-airline.git && \
