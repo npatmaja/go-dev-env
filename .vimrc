@@ -19,7 +19,9 @@ Plug 'Shougo/neocomplete.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
+" Autoclose, brackets and quotes
 Plug 'tpope/vim-surround'
+Plug 'cohama/lexima.vim'
 
 Plug 'fatih/vim-go'
 
