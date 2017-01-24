@@ -3,11 +3,12 @@ MAINTAINER Nauval Atmaja
 
 ENV SRCPATH /go/src/app
 
-# Add dotfiles
-ADD .vimrc /root
-ADD .profile /root
-ADD .gitconfig /root
-ADD .gitmessage /root
+# Copy doftiles and make them accessible
+# globally
+COPY .vimrc /usr/share/vim/vimrc
+COPY .profile /etc/profile.d/godev.sh
+COPY .gitconfig /etc/gitconfig
+COPY .gitmessage /etc/gitmessage
 
 
 # RUN echo 'hosts: files [NOTFOUND=return] dns' >> /etc/nsswitch.conf
@@ -37,13 +38,13 @@ RUN mkdir /_tools && \
 	curl && \
 
 	# Install vim-plug
-	curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+	curl -fLo /usr/share/vim/autoload/plug.vim --create-dirs \
 	https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
 	
 	# Vim plugins
-	cd /root && \
-	mkdir -p .vim/plugged && \
-	cd .vim/plugged && \
+	cd /usr/share/vim/ && \
+	mkdir -p plugged && \
+	cd plugged && \
 	git clone --depth 1 https://github.com/scrooloose/nerdcommenter.git && \
 	git clone --depth 1 https://github.com/Shougo/neocomplete.vim.git && \
 	git clone --depth 1 https://github.com/tpope/vim-fugitive.git && \

@@ -5,7 +5,7 @@
 [core]
 	editor = vim
 [commit]
-	template = ~/.gitmessage
+	template = /etc/gitmessage
 [alias]
 	bl = branch -l
 	bd = branch -d
