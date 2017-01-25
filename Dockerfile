@@ -5,7 +5,7 @@ ENV SRCPATH /go/src/app
 
 # Copy doftiles and make them accessible
 # globally
-COPY .vimrc /usr/share/vim/vimrc
+COPY .vimrc /etc/vim/vimrc
 COPY .profile /etc/profile.d/godev.sh
 COPY .gitconfig /etc/gitconfig
 COPY .gitmessage /etc/gitmessage
@@ -38,11 +38,11 @@ RUN mkdir /_tools && \
 	curl && \
 
 	# Install vim-plug
-	curl -fLo /usr/share/vim/autoload/plug.vim --create-dirs \
+	curl -fLo /usr/share/vim/vimfiles/autoload/plug.vim --create-dirs \
 	https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
 	
 	# Vim plugins
-	cd /usr/share/vim/ && \
+	cd /usr/share/vim/vimfiles && \
 	mkdir -p plugged && \
 	cd plugged && \
 	git clone --depth 1 https://github.com/scrooloose/nerdcommenter.git && \
