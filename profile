@@ -3,3 +3,12 @@ stty -ixon
 
 export PATH="$GOPATH/bin:/usr/local/go/bin:$PATH"
 
+# Set hom folder to /home/nobody for non root user
+LUID=`id -u`
+
+if [ $LUID -gt 0 ] ; then
+	export HOME=/home/nobody
+fi
+
+# Aliases
+alias ll="ls -al"
