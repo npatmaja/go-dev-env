@@ -4,34 +4,34 @@
 " consecutive undo and others
 set nocompatible
 
-call plug#begin('~/.vim/plugged')
+"call plug#begin('~/.vim/plugged')
 " NerdTree. Disabled as it is really slow, use newtr (vim's native 
 " file explorer) instead.
 " See http://vimcasts.org/episodes/the-file-explorer/
 "
 " Auto comment
-Plug 'scrooloose/nerdcommenter'
+"Plug 'scrooloose/nerdcommenter'
 
 " Auto complete
-Plug 'Shougo/neocomplete.vim'
+"Plug 'Shougo/neocomplete.vim'
 
 " Git
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
+"Plug 'tpope/vim-fugitive'
+"Plug 'airblade/vim-gitgutter'
 
 " Autoclose, brackets and quotes
-Plug 'tpope/vim-surround'
-Plug 'cohama/lexima.vim'
+"Plug 'tpope/vim-surround'
+"Plug 'cohama/lexima.vim'
 
-Plug 'fatih/vim-go'
+"Plug 'fatih/vim-go'
 
 " Status bar
-Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline'
 
-call plug#end()
+"call plug#end()
 
 " Use pathogen (Deprecated, use Plug instead)
-" call pathogen#infect()
+call pathogen#infect()
 
 " Git, add spell checking and automatic wrapping at the
 " recommended 72 columns to you commit messages

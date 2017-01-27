@@ -3,11 +3,12 @@ MAINTAINER Nauval Atmaja
 
 ENV SRCPATH /go/src/app
 
-# Add dotfiles
-ADD .vimrc /root
-ADD .profile /root
-ADD .gitconfig /root
-ADD .gitmessage /root
+# Copy doftiles and make them accessible
+# globally
+COPY vimrc /etc/vim/vimrc
+COPY profile /etc/profile.d/godev.sh
+COPY gitconfig /etc/gitconfig
+COPY gitmessage /etc/gitmessage
 
 
 # RUN echo 'hosts: files [NOTFOUND=return] dns' >> /etc/nsswitch.conf
@@ -37,13 +38,16 @@ RUN mkdir /_tools && \
 	curl && \
 
 	# Install vim-plug
-	curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-	https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
-	
+	#curl -fLo /usr/share/vim/vimfiles/autoload/plug.vim --create-dirs \
+	#https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
+	# Install Pathogen
+	mkdir -p \
+	/usr/share/vim/vimfiles/autoload \
+	/usr/share/vim/vimfiles/bundle && \
+	curl -LSso /usr/share/vim/vimfiles/autoload/pathogen.vim https://tpo.pe/pathogen.vim && \
+
 	# Vim plugins
-	cd /root && \
-	mkdir -p .vim/plugged && \
-	cd .vim/plugged && \
+	cd /usr/share/vim/vimfiles/bundle && \
 	git clone --depth 1 https://github.com/scrooloose/nerdcommenter.git && \
 	git clone --depth 1 https://github.com/Shougo/neocomplete.vim.git && \
 	git clone --depth 1 https://github.com/tpope/vim-fugitive.git && \
@@ -52,10 +56,21 @@ RUN mkdir /_tools && \
 	git clone --depth 1 https://github.com/airblade/vim-gitgutter.git && \
 	git clone --depth 1 https://github.com/fatih/vim-go.git && \
 	git clone --depth 1 https://github.com/vim-airline/vim-airline.git && \
-	vim +PlugInstall +GoInstallBinaries +qall && \
+	vim +GoInstallBinaries +qall && \
 	# Cleanup
-	rm -rf nerdcommenter/.git neocomplete/.git vim-fugitive/.git \
-	vim-gitgutter/.git vim-go/.git vim-airline/.git && \
+	rm -rf \
+	nerdcommenter/.git \
+	neocomplete/.git \
+	vim-fugitive/.git \
+	vim-surround/.git \
+	lexima.vim/.git \
+	vim-gitgutter/.git \
+	vim-go/.git \
+	vim-airline/.git && \
+
+	# Nobody's home
+	mkdir /home/nobody && \
+	chmod 777 /home/nobody && \
 
 	# Install govendor
 	go get -u github.com/kardianos/govendor && \
