@@ -4,33 +4,9 @@
 " consecutive undo and others
 set nocompatible
 
-"call plug#begin('~/.vim/plugged')
-" NerdTree. Disabled as it is really slow, use newtr (vim's native 
-" file explorer) instead.
-" See http://vimcasts.org/episodes/the-file-explorer/
-"
-" Auto comment
-"Plug 'scrooloose/nerdcommenter'
-
-" Auto complete
-"Plug 'Shougo/neocomplete.vim'
-
-" Git
-"Plug 'tpope/vim-fugitive'
-"Plug 'airblade/vim-gitgutter'
-
-" Autoclose, brackets and quotes
-"Plug 'tpope/vim-surround'
-"Plug 'cohama/lexima.vim'
-
-"Plug 'fatih/vim-go'
-
-" Status bar
-"Plug 'vim-airline/vim-airline'
-
-"call plug#end()
-
-" Use pathogen (Deprecated, use Plug instead)
+" Use pathogen as the package manager
+" all packages are installed when building
+" the dockerfile
 call pathogen#infect()
 
 " Git, add spell checking and automatic wrapping at the
@@ -260,17 +236,6 @@ nnoremap <buffer> <C-p> :call pdv#DocumentWithSnip()<CR>
 
 " Set spell to en
 nnoremap <leader>s :set spell spelllang=en<cr>
-
-" Abbreviations
-" typos
-iabbrev adn and
-iabbrev tehn then
-
-iabbrev @@ nauval.atmaja@gmail.com
-iabbrev @@1 noval.78@gmail.com
-iabbrev @@a @author Nauval Atmaja <noval.78@gmail.com>
-iabbrev @@b @author Nauval Atmaja <nauval.atmaja@gmail.com>
-
 
 "" Autocommands -------------------------------------{{{
 " Dissable generating comment in the next line after a comment line
