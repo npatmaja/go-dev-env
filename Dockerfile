@@ -10,26 +10,22 @@ COPY profile /etc/profile.d/godev.sh
 COPY gitconfig /etc/gitconfig
 COPY gitmessage /etc/gitmessage
 
-
-# RUN echo 'hosts: files [NOTFOUND=return] dns' >> /etc/nsswitch.conf
-
-# Tools
+# Creating tools to be executed by reflex and setup the home folder for
+# nobody
 RUN mkdir /_tools && \
 	touch /_tools/up.sh && \
 	echo "#!/bin/sh" >> /_tools/up.sh && \
 	echo "reflex -c /_tools/reflex.conf; sh" >> /_tools/up.sh && \
 	chmod +x /_tools/up.sh && \
-
-	# Reflex conf
 	touch /_tools/reflex.conf && \
 	echo "-sg '*.go' /_tools/build.sh" >> /_tools/reflex.conf && \
-
-	# Build and run script
 	touch /_tools/build.sh && \
 	echo "#!/bin/sh" >> /_tools/build.sh && \
 	echo "cd $SRCPATH && go build -o /appbin && rm -rf /tmp/*" >> /_tools/build.sh && \
 	echo "/appbin" >> /_tools/build.sh && \
-	chmod +x /_tools/build.sh
+	chmod +x /_tools/build.sh && \
+	mkdir /home/nobody && \
+	chmod 777 /home/nobody
 
 # Install tools
 RUN apk add --no-cache \
@@ -37,10 +33,8 @@ RUN apk add --no-cache \
 	vim \
 	curl
 
-# Install vim-plug
-#curl -fLo /usr/share/vim/vimfiles/autoload/plug.vim --create-dirs \
-#https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
-# Install Pathogen
+# Install Vim plugins
+# using Pathogen to manange the plugin
 RUN mkdir -p \
 	/usr/share/vim/vimfiles/autoload \
 	/usr/share/vim/vimfiles/bundle && \
@@ -54,8 +48,6 @@ RUN mkdir -p \
 	git clone --depth 1 https://github.com/airblade/vim-gitgutter.git && \
 	git clone --depth 1 --branch v1.16 https://github.com/fatih/vim-go.git && \
 	git clone --depth 1 https://github.com/vim-airline/vim-airline.git && \
-	#vim +GoInstallBinaries +qall && \
-	# Cleanup
 	rm -rf \
 	nerdcommenter/.git \
 	neocomplete/.git \
@@ -64,26 +56,18 @@ RUN mkdir -p \
 	lexima.vim/.git \
 	vim-gitgutter/.git \
 	vim-go/.git \
-	vim-airline/.git && \
+	vim-airline/.git
 
-	# Nobody's home
-	mkdir /home/nobody && \
-	chmod 777 /home/nobody
-
-	# Install govendor
-	# go get -u github.com/kardianos/govendor && \
+# Install dependencies using go get
 RUN cd /go/src/ && \
 	git clone --branch v1.0.9 https://github.com/kardianos/govendor.git && \
 	cd govendor && \
 	go get && \
 	cd /go/src/ && \
-	# Install reflex
-	#go get -u github.com/cespare/reflex && \
 	git clone --branch v0.2.0 https://github.com/cespare/reflex.git && \
 	cd reflex && \
 	go get && \
-
-	# vim-go dependencies
+	cd /go/src && \
 	go get -u github.com/klauspost/asmfmt/cmd/asmfmt && \
 	go get -u github.com/kisielk/errcheck && \
 	go get -u github.com/davidrjenni/reftools/cmd/fillstruct && \
@@ -100,12 +84,8 @@ RUN cd /go/src/ && \
 	go get -u github.com/josharian/impl && \
 	go get -u github.com/dominikh/go-tools/cmd/keyify && \
 	go get -u github.com/fatih/motion && \
-
-	# Cleanup
 	rm -rf /go/src/* && \
 	apk del curl && \
-
-	# Create workspace
 	mkdir -p /go/src/app
 
 VOLUME /go/src/app
