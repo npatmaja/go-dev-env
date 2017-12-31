@@ -10,25 +10,12 @@ COPY profile /etc/profile.d/godev.sh
 COPY gitconfig /etc/gitconfig
 COPY gitmessage /etc/gitmessage
 
-# Creating tools to be executed by reflex and setup the home folder for
-# nobody
-RUN mkdir /_tools && \
-	touch /_tools/up.sh && \
-	echo "#!/bin/sh" >> /_tools/up.sh && \
-	echo "reflex -c /_tools/reflex.conf; sh" >> /_tools/up.sh && \
-	chmod +x /_tools/up.sh && \
-	touch /_tools/reflex.conf && \
-	echo "-sg '*.go' /_tools/build.sh" >> /_tools/reflex.conf && \
-	touch /_tools/build.sh && \
-	echo "#!/bin/sh" >> /_tools/build.sh && \
-	echo "cd $SRCPATH && go build -o /appbin && rm -rf /tmp/*" >> /_tools/build.sh && \
-	echo "/appbin" >> /_tools/build.sh && \
-	chmod +x /_tools/build.sh && \
-	mkdir /home/nobody && \
-	chmod 777 /home/nobody
-
-# Install tools
-RUN apk add --no-cache \
+# Seeting up box:
+# - add nobody's home directory
+# - install package
+RUN mkdir /home/nobody && \
+	chmod 777 /home/nobody && \
+	apk add --no-cache \
 	git \
 	vim \
 	curl
@@ -87,6 +74,20 @@ RUN cd /go/src/ && \
 	rm -rf /go/src/* && \
 	apk del curl && \
 	mkdir -p /go/src/app
+
+# Create script to be executed by reflex upon code changes
+RUN mkdir /_tools && \
+	touch /_tools/up.sh && \
+	echo "#!/bin/sh" >> /_tools/up.sh && \
+	echo "reflex -c /_tools/reflex.conf; sh" >> /_tools/up.sh && \
+	chmod +x /_tools/up.sh && \
+	touch /_tools/reflex.conf && \
+	echo "-sg '*.go' /_tools/build.sh" >> /_tools/reflex.conf && \
+	touch /_tools/build.sh && \
+	echo "#!/bin/sh" >> /_tools/build.sh && \
+	echo "cd $SRCPATH && go build -o /appbin && rm -rf /tmp/*" >> /_tools/build.sh && \
+	echo "/appbin" >> /_tools/build.sh && \
+	chmod +x /_tools/build.sh
 
 VOLUME /go/src/app
 
