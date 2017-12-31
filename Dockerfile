@@ -1,4 +1,4 @@
-FROM golang:alpine
+FROM golang:1.9-alpine
 MAINTAINER Nauval Atmaja
 
 ENV SRCPATH /go/src/app
@@ -29,34 +29,32 @@ RUN mkdir /_tools && \
 	echo "#!/bin/sh" >> /_tools/build.sh && \
 	echo "cd $SRCPATH && go build -o /appbin && rm -rf /tmp/*" >> /_tools/build.sh && \
 	echo "/appbin" >> /_tools/build.sh && \
-	chmod +x /_tools/build.sh && \
+	chmod +x /_tools/build.sh
 
-	# Install tools
-	apk add --no-cache \
+# Install tools
+RUN apk add --no-cache \
 	git \
 	vim \
-	curl && \
+	curl
 
-	# Install vim-plug
-	#curl -fLo /usr/share/vim/vimfiles/autoload/plug.vim --create-dirs \
-	#https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
-	# Install Pathogen
-	mkdir -p \
+# Install vim-plug
+#curl -fLo /usr/share/vim/vimfiles/autoload/plug.vim --create-dirs \
+#https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
+# Install Pathogen
+RUN mkdir -p \
 	/usr/share/vim/vimfiles/autoload \
 	/usr/share/vim/vimfiles/bundle && \
 	curl -LSso /usr/share/vim/vimfiles/autoload/pathogen.vim https://tpo.pe/pathogen.vim && \
-
-	# Vim plugins
 	cd /usr/share/vim/vimfiles/bundle && \
-	git clone --depth 1 https://github.com/scrooloose/nerdcommenter.git && \
-	git clone --depth 1 https://github.com/Shougo/neocomplete.vim.git && \
+	git clone --depth 1 --branch 2.5.1 https://github.com/scrooloose/nerdcommenter.git && \
+	git clone --depth 1 --branch ver.2.1 https://github.com/Shougo/neocomplete.vim.git && \
 	git clone --depth 1 https://github.com/tpope/vim-fugitive.git && \
-	git clone --depth 1 https://github.com/tpope/vim-surround.git && \
+	git clone --depth 1 --branc v2.1 https://github.com/tpope/vim-surround.git && \
 	git clone --depth 1 https://github.com/cohama/lexima.vim.git && \
 	git clone --depth 1 https://github.com/airblade/vim-gitgutter.git && \
-	git clone --depth 1 https://github.com/fatih/vim-go.git && \
+	git clone --depth 1 --branch v1.16 https://github.com/fatih/vim-go.git && \
 	git clone --depth 1 https://github.com/vim-airline/vim-airline.git && \
-	vim +GoInstallBinaries +qall && \
+	#vim +GoInstallBinaries +qall && \
 	# Cleanup
 	rm -rf \
 	nerdcommenter/.git \
@@ -70,12 +68,39 @@ RUN mkdir /_tools && \
 
 	# Nobody's home
 	mkdir /home/nobody && \
-	chmod 777 /home/nobody && \
+	chmod 777 /home/nobody
 
 	# Install govendor
-	go get -u github.com/kardianos/govendor && \
+	# go get -u github.com/kardianos/govendor && \
+RUN cd /go/src/ && \
+	git clone --branch v1.0.9 https://github.com/kardianos/govendor.git && \
+	cd govendor && \
+	go get && \
+	cd /go/src/ && \
 	# Install reflex
-	go get -u github.com/cespare/reflex && \
+	#go get -u github.com/cespare/reflex && \
+	git clone --branch v0.2.0 https://github.com/cespare/reflex.git && \
+	cd reflex && \
+	go get && \
+
+	# vim-go dependencies
+	go get -u github.com/klauspost/asmfmt/cmd/asmfmt && \
+	go get -u github.com/kisielk/errcheck && \
+	go get -u github.com/davidrjenni/reftools/cmd/fillstruct && \
+	go get -u github.com/nsf/gocode && \
+	go get -u github.com/rogpeppe/godef && \
+	go get -u github.com/zmb3/gogetdoc && \
+	go get -u golang.org/x/tools/cmd/goimports && \
+	go get -u github.com/golang/lint/golint && \
+	go get -u github.com/alecthomas/gometalinter && \
+	go get -u github.com/fatih/gomodifytags && \
+	go get -u golang.org/x/tools/cmd/gorename && \
+	go get -u github.com/jstemmer/gotags && \
+	go get -u golang.org/x/tools/cmd/guru && \
+	go get -u github.com/josharian/impl && \
+	go get -u github.com/dominikh/go-tools/cmd/keyify && \
+	go get -u github.com/fatih/motion && \
+
 	# Cleanup
 	rm -rf /go/src/* && \
 	apk del curl && \
