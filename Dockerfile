@@ -45,8 +45,30 @@ RUN mkdir -p \
 	vim-go/.git \
 	vim-airline/.git
 
-# Install dependencies using go get
-RUN cd /go/src/ && \
+# Install dependencies
+# Tooling:
+# - dep
+# - govendor v1.0.9
+# - reflex v0.2.0
+# vim-go dependencies
+# - asmfmt
+# - errcheck
+# - fillstruct
+# - gocode
+# - godef
+# - gogetdoc
+# - goimports
+# - golint
+# - gometalinter
+# - gomodifytags
+# - gorename
+# - gotags
+# - guru
+# - impl
+# - keyify
+# - motion
+RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh && \
+	cd /go/src/ && \
 	git clone --branch v1.0.9 https://github.com/kardianos/govendor.git && \
 	cd govendor && \
 	go get && \
