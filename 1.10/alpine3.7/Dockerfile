@@ -68,10 +68,10 @@ RUN mkdir -p \
 # - keyify
 # - motion
 RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh && \
-	cd /go/src/ && \
-	git clone --branch v1.0.9 https://github.com/kardianos/govendor.git && \
-	cd govendor && \
-	go get && \
+	# cd /go/src/ && \
+	# git clone --branch v1.0.9 https://github.com/kardianos/govendor.git && \
+	# cd govendor && \
+	# go get && \
 	cd /go/src/ && \
 	git clone --branch v0.2.0 https://github.com/cespare/reflex.git && \
 	cd reflex && \
@@ -94,6 +94,7 @@ RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh && 
 	go get -u github.com/dominikh/go-tools/cmd/keyify && \
 	go get -u github.com/fatih/motion && \
 	rm -rf /go/src/* && \
+	rm -rf /root/.cache && \
 	apk del curl && \
 	mkdir -p /go/src/app
 
