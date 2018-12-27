@@ -13,6 +13,7 @@ do
 	; do
 		echo "Updating Dockerfile for Golang $version/$variant"
 		mkdir -p $version/$variant
+		cp vimrc profile gitmessage gitconfig $version/$variant
 	    tag=${variant#alpine} # yields 3.7,3.8...
 	    template='alpine'
 
