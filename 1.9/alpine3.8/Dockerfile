@@ -48,7 +48,6 @@ RUN mkdir -p \
 # Install dependencies
 # Tooling:
 # - dep
-# - govendor v1.0.9
 # - reflex v0.2.0
 # vim-go dependencies
 # - asmfmt
@@ -68,10 +67,6 @@ RUN mkdir -p \
 # - keyify
 # - motion
 RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh && \
-	# cd /go/src/ && \
-	# git clone --branch v1.0.9 https://github.com/kardianos/govendor.git && \
-	# cd govendor && \
-	# go get && \
 	cd /go/src/ && \
 	git clone --branch v0.2.0 https://github.com/cespare/reflex.git && \
 	cd reflex && \
